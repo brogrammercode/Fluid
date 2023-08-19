@@ -32,7 +32,11 @@ class _LockScreenState extends State<LockScreen> {
         // here if LoggedInState then we will pushReplacement the page to TodoScreen...
         if (state is LoggedInState) {
           popUntilFirstPage(context);
-          replace(context, TodoScreen());
+          replace(
+              context,
+              TodoScreen(
+                code: _code,
+              ));
         }
       },
       builder: (context, state) {

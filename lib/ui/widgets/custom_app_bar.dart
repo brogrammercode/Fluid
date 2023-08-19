@@ -11,7 +11,8 @@ Widget customAppBar(
   return Container(
     height: kPad(context) * .25,
     width: kPad(context),
-    decoration: BoxDecoration(),
+    decoration: const BoxDecoration(color: white2),
+    padding: EdgeInsets.symmetric(horizontal: kPad(context) * .03),
     child: Center(
       child: SafeArea(
           child: Row(

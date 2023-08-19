@@ -11,12 +11,37 @@ class TodoRepository {
     _todo = await Hive.openBox<TodoModel>('todo_box');
   }
 
-  // we will work on them on another video...
-  getTodos() {}
+  // to get the todo list according to the code
+  List<TodoModel> getTodos(final int code) {
+    final todos = _todo.values.where((element) => element.code == code);
+    return todos.toList();
+  }
 
-  addTodos() {}
+  // to add the task to the list according to the respective code...
+  void addTodos(final int code, final int animationIndex, final String task,
+      final int time, final int statusIndex) {
+    _todo
+        .add(TodoModel(code, animationIndex, task, time, statusIndex))
+        .whenComplete(() => print('task added successfully'));
+  }
 
-  removeTodos() {}
+  // to remove the task
+  Future<void> removeTodos(final int code, final String task) async {
+    final taskToRemove = _todo.values
+        .firstWhere((element) => element.code == code && element.task == task);
+    await taskToRemove.delete();
+  }
 
-  updateTodos() {}
+  // to update the task status ( if it is completed / working on it / not completed)
+  Future<void> updateTodos(final int code, final String task,
+      final int animationIndex, final int time, final int statusIndex) async {
+    final taskToEdit = _todo.values
+        .firstWhere((element) => element.code == code && element.task == task);
+
+    // it will provide a particular key for that particular task...
+    final index = taskToEdit.key as int;
+
+    await _todo.put(
+        index, TodoModel(code, animationIndex, task, time, statusIndex));
+  }
 }
