@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:leaf_tutorial_todo/ui/widgets/toast_notification.dart';
 
 import '../models/todo_model.dart';
 
@@ -22,14 +23,16 @@ class TodoRepository {
       final int time, final int statusIndex) {
     _todo
         .add(TodoModel(code, animationIndex, task, time, statusIndex))
-        .whenComplete(() => print('task added successfully'));
+        .whenComplete(() => showToast('$task added successfully'));
   }
 
   // to remove the task
   Future<void> removeTodos(final int code, final String task) async {
     final taskToRemove = _todo.values
         .firstWhere((element) => element.code == code && element.task == task);
-    await taskToRemove.delete();
+    await taskToRemove
+        .delete()
+        .whenComplete(() => showToast('$task deleted successfully'));
   }
 
   // to update the task status ( if it is completed / working on it / not completed)
@@ -41,7 +44,10 @@ class TodoRepository {
     // it will provide a particular key for that particular task...
     final index = taskToEdit.key as int;
 
-    await _todo.put(
-        index, TodoModel(code, animationIndex, task, time, statusIndex));
+    await _todo
+        .put(index, TodoModel(code, animationIndex, task, time, statusIndex))
+        .whenComplete(() => showToast('$task updated successfully'));
   }
 }
+
+// till then let's make another widget...

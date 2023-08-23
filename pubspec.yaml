@@ -43,6 +43,7 @@ dependencies:
   bloc: ^8.1.2
   intl: ^0.18.1
   lottie: ^2.6.0
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:

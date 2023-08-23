@@ -41,3 +41,8 @@ class MyApp extends StatelessWidget {
 
 // LockScreen is working properly... :D
 // in the next video we will be working with todoRepository and its Bloc Structure...
+
+
+
+// So, the app is completed hope you learned something... Th
+// anks for watching!!

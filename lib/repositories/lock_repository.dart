@@ -1,6 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/lock_model.dart';
+import '../ui/widgets/toast_notification.dart';
 
 class LockRepository {
   late Box<LockModel> _lock;
@@ -19,7 +20,9 @@ class LockRepository {
       return RegisterResponse.alreadyExists;
     }
     try {
-      _lock.add(LockModel(code));
+      _lock
+          .add(LockModel(code))
+          .whenComplete(() => showToast('Registered as $code'));
       return RegisterResponse.success;
     } on Exception catch (e) {
       return RegisterResponse.failure;
@@ -30,6 +33,7 @@ class LockRepository {
   Future<int?> authenticate(final int code) async {
     final success = await _lock.values.any((element) => element.code == code);
     if (success) {
+      showToast('Log-in as $code');
       return code;
     } else {
       return null;

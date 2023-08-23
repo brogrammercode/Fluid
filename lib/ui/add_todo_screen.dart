@@ -179,3 +179,12 @@ class AddTodoScreen extends StatelessWidget {
 }
 
 // So task is adding successfully...
+
+// Let's add a toast(flutter-toast) for the add task notification...
+
+// add the dependency -> fluttertoast: ^8.2.2
+
+// if you face any error then
+// 1. flutter clean
+// 2. flutter pub get
+// 3. the re-run the Application...

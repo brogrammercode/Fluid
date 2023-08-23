@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:leaf_tutorial_todo/repositories/todo_repository.dart';
 import 'package:leaf_tutorial_todo/ui/todo_screen.dart';
 import 'package:leaf_tutorial_todo/ui/widgets/buttons.dart';
 import 'package:leaf_tutorial_todo/ui/widgets/custom_app_bar.dart';
 import 'package:leaf_tutorial_todo/util/navigator.dart';
 
 import '../bloc/lock/lock_bloc.dart';
+import '../bloc/todo/todo_bloc.dart';
 import '../util/constants.dart';
 
 class LockScreen extends StatefulWidget {
@@ -19,6 +21,7 @@ class LockScreen extends StatefulWidget {
 
 class _LockScreenState extends State<LockScreen> {
   int _code = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +37,13 @@ class _LockScreenState extends State<LockScreen> {
           popUntilFirstPage(context);
           replace(
               context,
-              TodoScreen(
-                code: _code,
+              BlocProvider(
+                create: (context) =>
+                    TodoBloc(RepositoryProvider.of<TodoRepository>(context))
+                      ..add(LoadTodoListEvent(_code)),
+                child: TodoScreen(
+                  code: _code,
+                ),
               ));
         }
       },
